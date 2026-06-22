@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------
+   Design tokens — "Cyanotype" system
+   A blueprint / technical-drawing language: deep cyanotype blue
+   surfaces, linen-white linework, and a single grease-pencil copper
+   accent used the way an engineer marks up a print by hand.
+------------------------------------------------------------------------*/
+@theme inline {
+  --color-blueprint-950: #061018;
+  --color-blueprint-900: #0c1e2c;
+  --color-blueprint-800: #143247;
+  --color-blueprint-700: #1d4360;
+  --color-blueprint-600: #2c5b80;
+
+  --color-linen: #eee9dd;
+  --color-mist: #c4d3dc;
+  --color-slate: #82a0ae;
+
+  --color-copper: #e2622a;
+  --color-copper-bright: #f08148;
+  --color-copper-dim: #a8431b;
+
+  --font-display: "Space Grotesk", "Noto Sans JP", sans-serif;
+  --font-body: "Noto Sans JP", "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", "Noto Sans JP", monospace;
+
+  --radius-sheet: 3px;
+}
+
+/* ------------------------------------------------------------------ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background-color: var(--color-blueprint-950);
+  color: var(--color-linen);
+  font-family: var(--font-body);
+  font-feature-settings: "palt";
+}
+
+::selection {
+  background: var(--color-copper);
+  color: var(--color-blueprint-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-copper-bright);
+  outline-offset: 2px;
+}
+
+/* Drafting-table grid backdrop, used behind sections */
+.grid-sheet {
+  background-image:
+    linear-gradient(rgba(238, 233, 221, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(238, 233, 221, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.grid-sheet-fine {
+  background-image:
+    linear-gradient(rgba(238, 233, 221, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(238, 233, 221, 0.06) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+/* Hairline rule that reads like a drawing border */
+.hairline {
+  border-color: rgba(196, 211, 220, 0.18);
+}
+
+/* Dimension-line ticks, used as small decorative end-caps */
+.tick::before,
+.tick::after {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 6px;
+  background: currentColor;
+  vertical-align: middle;
+}
+
+/* Scroll-reveal primitive — toggled via IntersectionObserver in React */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Custom scrollbar to match the system, non-essential progressive enhancement */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-blueprint-950);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-blueprint-700);
+  border-radius: 8px;
+}
