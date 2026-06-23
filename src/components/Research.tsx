@@ -29,7 +29,7 @@ export function Research() {
 
         {/* Stat callouts, like dimension call-outs on a drawing */}
         <Reveal delay={120}>
-          <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden border sm:grid-cols-3" style={{ borderColor: "rgba(196, 211, 220, 0.18)", backgroundColor: "rgba(196, 211, 220, 0.18)" }}>
+          <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden border sm:grid-cols-3" style={{ borderColor: "rgba(26, 35, 50, 0.12)", backgroundColor: "rgba(26, 35, 50, 0.12)" }}>
             {research.stats.map((s) => (
               <div key={s.label.en} className="p-6" style={{ backgroundColor: "var(--color-blueprint-900)" }}>
                 <p className="font-mono text-4xl font-semibold" style={{ color: "var(--color-copper-bright)" }}>

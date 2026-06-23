@@ -32,7 +32,7 @@ export function About() {
                 <div
                   key={v.title.en}
                   className="border p-5"
-                  style={{ borderColor: "rgba(196, 211, 220, 0.18)", backgroundColor: "var(--color-blueprint-900)" }}
+                  style={{ borderColor: "rgba(26, 35, 50, 0.12)", backgroundColor: "var(--color-blueprint-900)" }}
                 >
                   <p className="font-display text-sm font-semibold" style={{ color: "var(--color-copper-bright)" }}>
                     {v.title[lang]}

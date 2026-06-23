@@ -49,7 +49,7 @@ export function Hero() {
             <button
               onClick={() => scrollTo("experience")}
               className="border px-6 py-3 font-mono text-xs tracking-[0.12em] transition-colors hover:border-[var(--color-copper-bright)]"
-              style={{ borderColor: "rgba(196, 211, 220, 0.35)", color: "var(--color-linen)" }}
+              style={{ borderColor: "rgba(26, 35, 50, 0.2)", color: "var(--color-linen)" }}
             >
               {hero.ctaSecondary[lang]}
             </button>

@@ -40,6 +40,7 @@ export interface ProjectItem {
   description: Bi;
   stack: string[];
   metric?: Bi;
+  github?: string;
 }
 
 export interface AchievementItem {
@@ -78,8 +79,8 @@ export const hero = {
     en: "Giving a small lunar rover a 2-DOF active tail, so it can climb where fixed wheels cannot.",
   } as Bi,
   sub: {
-    ja: "機構設計からMATLAB/Simscapeによる物理シミュレーション構築まで、ハードウェアを一人称で検証するエンジニアです。",
-    en: "A hardware engineer who owns the full loop — mechanism design, prototyping, and building the MATLAB/Simscape physics simulation from scratch.",
+    ja: "機構設計からシミュレーション構築、日常の不便を解消する個人開発まで、課題を自分の手で動くものに変えるエンジニアです。",
+    en: "From mechanism design and physics simulation to personal tools that fix everyday friction — an engineer who turns problems into things that actually work.",
   } as Bi,
   ctaPrimary: { ja: "研究を見る", en: "View research" } as Bi,
   ctaSecondary: { ja: "経歴を見る", en: "View experience" } as Bi,
@@ -196,6 +197,18 @@ export const research = {
 
 export const projects: ProjectItem[] = [
   {
+    title: { ja: "Claude 使用量メニューバーアプリ", en: "Claude Usage Menu Bar App" },
+    tag: { ja: "個人開発", en: "Personal project" },
+    status: { ja: "自己利用中", en: "In use" },
+    description: {
+      ja: "Claude の5時間ごとの使用量をmacOSのメニューバーにリアルタイム表示するネイティブアプリ。認証情報はmacOS Keychainに保存し、ログイン時自動起動にも対応。自分が毎日使うツールを自分で作った。",
+      en: "A native macOS menu bar app that shows Claude's 5-hour usage allowance in real time. Credentials are stored securely in the macOS Keychain; supports launch at login. Built it because I needed it myself.",
+    },
+    stack: ["Swift", "SwiftUI", "macOS 14+"],
+    metric: { ja: "毎日自分で使用中", en: "Used daily by myself" },
+    github: "https://github.com/Tsurukai-haru/claude-usage-menubar",
+  },
+  {
     title: { ja: "能動テール機構の物理シミュレーション環境構築", en: "Physics Simulation Environment for the Active Tail Mechanism" },
     tag: { ja: "研究", en: "Research" },
     status: { ja: "完了（卒業論文として提出）", en: "Completed — submitted as graduation thesis" },
@@ -302,8 +315,8 @@ export const contact = {
   } as Bi,
   emailLabel: { ja: "メールを送る", en: "Send an email" } as Bi,
   // TODO: 実際の連絡先・リンクに差し替えてください（README参照）。
-  email: "your.email@example.com",
-  github: "https://github.com/your-username",
+  email: "haru.tsurukai.info@gmail.com",
+  github: "https://github.com/Tsurukai-haru",
   linkedin: "",
 };
 

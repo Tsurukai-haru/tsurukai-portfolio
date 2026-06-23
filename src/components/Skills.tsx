@@ -19,10 +19,10 @@ export function Skills() {
         </Reveal>
 
         {/* Styled like a bill-of-materials table from a drawing sheet */}
-        <div className="overflow-hidden border" style={{ borderColor: "rgba(196, 211, 220, 0.18)" }}>
+        <div className="overflow-hidden border" style={{ borderColor: "rgba(26, 35, 50, 0.12)" }}>
           <div
             className="grid grid-cols-[80px_1fr] border-b font-mono text-[11px] tracking-[0.15em] sm:grid-cols-[120px_1fr_1.4fr]"
-            style={{ borderColor: "rgba(196, 211, 220, 0.18)", color: "var(--color-slate)", backgroundColor: "var(--color-blueprint-900)" }}
+            style={{ borderColor: "rgba(26, 35, 50, 0.12)", color: "var(--color-slate)", backgroundColor: "var(--color-blueprint-900)" }}
           >
             <span className="px-4 py-2.5">{lang === "ja" ? "区分" : "TIER"}</span>
             <span className="px-4 py-2.5">{lang === "ja" ? "項目" : "ITEM"}</span>
@@ -36,7 +36,7 @@ export function Skills() {
                   <div
                     key={item.name}
                     className="grid grid-cols-[80px_1fr] border-b last:border-b-0 sm:grid-cols-[120px_1fr_1.4fr]"
-                    style={{ borderColor: "rgba(196, 211, 220, 0.1)" }}
+                    style={{ borderColor: "rgba(26, 35, 50, 0.08)" }}
                   >
                     <span
                       className="flex items-center px-4 py-3 font-mono text-[11px]"

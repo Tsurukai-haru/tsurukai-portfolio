@@ -1,21 +1,20 @@
 @import "tailwindcss";
 
 /* ----------------------------------------------------------------------
-   Design tokens — "Cyanotype" system
-   A blueprint / technical-drawing language: deep cyanotype blue
-   surfaces, linen-white linework, and a single grease-pencil copper
-   accent used the way an engineer marks up a print by hand.
+   Design tokens — "Light" system
+   Clean, readable light theme with bluish-gray surfaces, dark ink
+   headlines, and a single grease-pencil copper accent for personality.
 ------------------------------------------------------------------------*/
 @theme inline {
-  --color-blueprint-950: #061018;
-  --color-blueprint-900: #0c1e2c;
-  --color-blueprint-800: #143247;
-  --color-blueprint-700: #1d4360;
-  --color-blueprint-600: #2c5b80;
+  --color-blueprint-950: #f4f6f8;
+  --color-blueprint-900: #ffffff;
+  --color-blueprint-800: #edf1f5;
+  --color-blueprint-700: #c8d4dc;
+  --color-blueprint-600: #a0b4c0;
 
-  --color-linen: #eee9dd;
-  --color-mist: #c4d3dc;
-  --color-slate: #82a0ae;
+  --color-linen: #1a2332;
+  --color-mist: #3a4d5c;
+  --color-slate: #6b8090;
 
   --color-copper: #e2622a;
   --color-copper-bright: #f08148;
@@ -72,21 +71,21 @@ body {
 /* Drafting-table grid backdrop, used behind sections */
 .grid-sheet {
   background-image:
-    linear-gradient(rgba(238, 233, 221, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(238, 233, 221, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(26, 35, 50, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 35, 50, 0.05) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
 .grid-sheet-fine {
   background-image:
-    linear-gradient(rgba(238, 233, 221, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(238, 233, 221, 0.06) 1px, transparent 1px);
+    linear-gradient(rgba(26, 35, 50, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 35, 50, 0.05) 1px, transparent 1px);
   background-size: 8px 8px;
 }
 
 /* Hairline rule that reads like a drawing border */
 .hairline {
-  border-color: rgba(196, 211, 220, 0.18);
+  border-color: rgba(26, 35, 50, 0.12);
 }
 
 /* Dimension-line ticks, used as small decorative end-caps */

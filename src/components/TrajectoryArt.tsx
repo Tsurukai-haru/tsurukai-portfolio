@@ -41,7 +41,7 @@ export function TrajectoryArt() {
               S 620 ${y + 20}, 780 ${y}`}
           fill="none"
           stroke="var(--color-blueprint-700)"
-          strokeOpacity={0.35}
+          strokeOpacity={0.5}
           strokeWidth="1"
         />
       ))}

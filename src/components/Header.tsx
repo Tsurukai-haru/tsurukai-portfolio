@@ -27,8 +27,8 @@ export function Header() {
         scrolled ? "backdrop-blur-md" : ""
       }`}
       style={{
-        borderColor: "rgba(196, 211, 220, 0.18)",
-        backgroundColor: scrolled ? "rgba(6, 16, 24, 0.86)" : "transparent",
+        borderColor: "rgba(26, 35, 50, 0.12)",
+        backgroundColor: scrolled ? "rgba(244, 246, 248, 0.92)" : "transparent",
       }}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
@@ -78,7 +78,7 @@ export function Header() {
           <button
             onClick={toggle}
             className="flex items-center border font-mono text-[11px] tracking-[0.1em]"
-            style={{ borderColor: "rgba(196, 211, 220, 0.3)" }}
+            style={{ borderColor: "rgba(26, 35, 50, 0.2)" }}
             aria-label="Toggle language"
           >
             <span
@@ -104,7 +104,7 @@ export function Header() {
           {/* Mobile menu toggle */}
           <button
             className="flex h-9 w-9 items-center justify-center border md:hidden"
-            style={{ borderColor: "rgba(196, 211, 220, 0.3)" }}
+            style={{ borderColor: "rgba(26, 35, 50, 0.2)" }}
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={open}
@@ -119,7 +119,7 @@ export function Header() {
       {open && (
         <nav
           className="flex flex-col border-t md:hidden"
-          style={{ borderColor: "rgba(196, 211, 220, 0.18)", backgroundColor: "rgba(6,16,24,0.96)" }}
+          style={{ borderColor: "rgba(26, 35, 50, 0.12)", backgroundColor: "rgba(244,246,248,0.98)" }}
         >
           {nav.map((item, i) => (
             <button

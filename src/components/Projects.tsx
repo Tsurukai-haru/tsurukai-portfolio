@@ -18,12 +18,12 @@ export function Projects() {
           />
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {projects.map((p, i) => (
             <Reveal key={p.title.en} delay={i * 90}>
               <article
                 className="flex h-full flex-col border p-6"
-                style={{ borderColor: "rgba(196, 211, 220, 0.18)", backgroundColor: "var(--color-blueprint-900)" }}
+                style={{ borderColor: "rgba(26, 35, 50, 0.12)", backgroundColor: "var(--color-blueprint-900)" }}
               >
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] tracking-[0.18em]" style={{ color: "var(--color-copper-bright)" }}>
@@ -47,17 +47,32 @@ export function Projects() {
                     <span
                       key={s}
                       className="border px-2 py-1 font-mono text-[10px]"
-                      style={{ borderColor: "rgba(196, 211, 220, 0.25)", color: "var(--color-slate)" }}
+                      style={{ borderColor: "rgba(26, 35, 50, 0.15)", color: "var(--color-slate)" }}
                     >
                       {s}
                     </span>
                   ))}
                 </div>
 
-                {p.metric && (
-                  <p className="mt-4 border-t pt-3 font-mono text-xs hairline" style={{ color: "var(--color-copper-bright)" }}>
-                    {p.metric[lang]}
-                  </p>
+                {(p.metric || p.github) && (
+                  <div className="mt-4 border-t pt-3 hairline flex items-center justify-between gap-4">
+                    {p.metric && (
+                      <p className="font-mono text-xs" style={{ color: "var(--color-copper-bright)" }}>
+                        {p.metric[lang]}
+                      </p>
+                    )}
+                    {p.github && (
+                      <a
+                        href={p.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-auto font-mono text-[10px] tracking-widest underline underline-offset-2 hover:opacity-70 transition-opacity"
+                        style={{ color: "var(--color-slate)" }}
+                      >
+                        GitHub →
+                      </a>
+                    )}
+                  </div>
                 )}
               </article>
             </Reveal>
