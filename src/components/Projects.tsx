@@ -1,44 +1,69 @@
 "use client";
 
-import { projects } from "@/data/content";
+import { useState } from "react";
+import { projects, ProjectItem } from "@/data/content";
 import { useLanguage } from "@/lib/language-context";
 import { Reveal } from "./Reveal";
-import { SheetHeading } from "./SheetHeading";
+import { ProjectModal } from "./ProjectModal";
 
 export function Projects() {
   const { lang } = useLanguage();
+  const [selected, setSelected] = useState<ProjectItem | null>(null);
 
   return (
-    <section id="projects" className="grid-sheet-fine border-t hairline py-24">
+    <section id="projects" className="relative py-24">
+      <ProjectModal project={selected} onClose={() => setSelected(null)} />
+      <div
+        className="pointer-events-none absolute right-[5%] top-[8%] h-72 w-72 rounded-full blur-3xl"
+        style={{ backgroundColor: "#f5c8e0", opacity: 0.35 }}
+      />
+      <div
+        className="pointer-events-none absolute bottom-[10%] left-[10%] h-56 w-56 rounded-full blur-3xl"
+        style={{ backgroundColor: "#c4d8f8", opacity: 0.3 }}
+      />
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal>
-          <SheetHeading
-            sheetLabel={{ ja: "SHEET 04 — PROJECTS", en: "SHEET 04 — PROJECTS" }}
-            heading={{ ja: "Featured Projects", en: "Featured Projects" }}
-          />
+          <h2
+            className="font-round text-3xl font-bold tracking-tight sm:text-4xl"
+            style={{ color: "#2b1d3a" }}
+          >
+            Projects
+          </h2>
+          <div className="mt-2 h-1 w-12 rounded-full" style={{ backgroundColor: "#a86ab8" }} />
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, i) => (
             <Reveal key={p.title.en} delay={i * 90}>
               <article
-                className="flex h-full flex-col border p-6"
-                style={{ borderColor: "rgba(26, 35, 50, 0.12)", backgroundColor: "var(--color-blueprint-900)" }}
+                className="group flex h-full flex-col rounded-2xl border border-[#e8d8f0] p-6 cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:border-[#c0a8d4] hover:shadow-[0_8px_24px_rgba(168,106,184,0.12)]"
+                style={{ backgroundColor: "rgba(255,255,255,0.6)", backdropFilter: "blur(8px)" }}
+                onClick={() => setSelected(p)}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setSelected(p); }}
+                tabIndex={0}
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] tracking-[0.18em]" style={{ color: "var(--color-copper-bright)" }}>
+                <div className="flex items-center gap-2">
+                  <span
+                    className="rounded-full px-3 py-0.5 text-xs font-semibold"
+                    style={{ backgroundColor: "#f5eeff", color: "#a86ab8" }}
+                  >
                     {p.tag[lang]}
                   </span>
-                  <span className="font-mono text-[10px]" style={{ color: "var(--color-slate)" }}>
-                    {p.status[lang]}
-                  </span>
+                  {p.status && (
+                    <span className="text-xs" style={{ color: "#c0a8d4" }}>
+                      {p.status[lang]}
+                    </span>
+                  )}
                 </div>
 
-                <h3 className="font-display mt-4 text-lg font-semibold leading-snug" style={{ color: "var(--color-linen)" }}>
+                <h3
+                  className="font-round mt-4 text-lg font-semibold leading-snug"
+                  style={{ color: "#2b1d3a" }}
+                >
                   {p.title[lang]}
                 </h3>
 
-                <p className="mt-3 flex-1 text-sm leading-relaxed" style={{ color: "var(--color-mist)" }}>
+                <p className="mt-3 flex-1 text-sm leading-relaxed" style={{ color: "#7a6888" }}>
                   {p.description[lang]}
                 </p>
 
@@ -46,34 +71,27 @@ export function Projects() {
                   {p.stack.map((s) => (
                     <span
                       key={s}
-                      className="border px-2 py-1 font-mono text-[10px]"
-                      style={{ borderColor: "rgba(26, 35, 50, 0.15)", color: "var(--color-slate)" }}
+                      className="rounded-full px-3 py-1 text-xs font-medium"
+                      style={{ backgroundColor: "#f5eeff", color: "#a86ab8" }}
                     >
                       {s}
                     </span>
                   ))}
                 </div>
 
-                {(p.metric || p.github) && (
-                  <div className="mt-4 border-t pt-3 hairline flex items-center justify-between gap-4">
-                    {p.metric && (
-                      <p className="font-mono text-xs" style={{ color: "var(--color-copper-bright)" }}>
-                        {p.metric[lang]}
-                      </p>
-                    )}
-                    {p.github && (
-                      <a
-                        href={p.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="ml-auto font-mono text-[10px] tracking-widest underline underline-offset-2 hover:opacity-70 transition-opacity"
-                        style={{ color: "var(--color-slate)" }}
-                      >
-                        GitHub →
-                      </a>
-                    )}
-                  </div>
-                )}
+                <div className="mt-4 flex items-center justify-between border-t pt-3" style={{ borderColor: "#e8d8f0" }}>
+                  {p.metric && (
+                    <p className="text-xs font-semibold" style={{ color: "#a86ab8" }}>
+                      {p.metric[lang]}
+                    </p>
+                  )}
+                  <span className="ml-auto inline-flex items-center gap-1 text-xs font-semibold" style={{ color: "#a86ab8" }}>
+                    {lang === "ja" ? "詳細を見る" : "View details"}
+                    <svg className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </span>
+                </div>
               </article>
             </Reveal>
           ))}

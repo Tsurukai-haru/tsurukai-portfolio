@@ -1,6 +1,6 @@
 "use client";
 
-import { contact, footer } from "@/data/content";
+import { contact } from "@/data/content";
 import { useLanguage } from "@/lib/language-context";
 import { Reveal } from "./Reveal";
 
@@ -8,51 +8,91 @@ export function Contact() {
   const { lang } = useLanguage();
 
   return (
-    <section id="contact" className="border-t hairline py-24">
-      <div className="mx-auto max-w-3xl px-5 text-center sm:px-8">
+    <section
+      id="contact"
+      className="relative py-24"
+      style={{ background: "linear-gradient(to bottom, transparent, #f5eeff 80%)" }}
+    >
+      <div
+        className="pointer-events-none absolute right-[5%] top-[5%] h-64 w-64 rounded-full blur-3xl"
+        style={{ backgroundColor: "#f5c8e0", opacity: 0.35 }}
+      />
+      <div
+        className="pointer-events-none absolute bottom-[20%] left-[5%] h-56 w-56 rounded-full blur-3xl"
+        style={{ backgroundColor: "#d4c0f0", opacity: 0.3 }}
+      />
+
+      <div className="relative mx-auto max-w-3xl px-8 text-center">
         <Reveal>
-          <span className="font-mono text-xs tracking-[0.2em]" style={{ color: "var(--color-slate)" }}>
-            {contact.sheetLabel[lang]}
-          </span>
+          <p className="text-sm" style={{ color: "#7a6888" }}>
+            {contact.thanks[lang]}
+          </p>
           <h2
-            className="font-display mt-3 text-3xl font-semibold tracking-tight sm:text-4xl"
-            style={{ color: "var(--color-linen)" }}
+            className="font-round mt-4 text-3xl font-bold tracking-tight sm:text-4xl"
+            style={{ color: "#2b1d3a" }}
           >
             {contact.heading[lang]}
           </h2>
-          <p className="mt-4 text-base" style={{ color: "var(--color-mist)" }}>
+          <div className="mx-auto mt-2 h-1 w-12 rounded-full" style={{ backgroundColor: "#a86ab8" }} />
+        </Reveal>
+
+        <Reveal delay={80}>
+          <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed" style={{ color: "#7a6888" }}>
             {contact.body[lang]}
           </p>
+        </Reveal>
 
-          <a
-            href={`mailto:${contact.email}`}
-            className="mt-8 inline-flex items-center gap-2 px-7 py-3.5 font-mono text-xs tracking-[0.12em] transition-transform hover:-translate-y-0.5"
-            style={{ backgroundColor: "var(--color-copper)", color: "var(--color-blueprint-950)" }}
-          >
-            {contact.emailLabel[lang]} →
-          </a>
+        <Reveal delay={160}>
+          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <a
+              href={`mailto:${contact.email}`}
+              aria-label={contact.emailLabel[lang]}
+              className="font-round inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5"
+              style={{
+                backgroundColor: "#8c45a5",
+                boxShadow: "0 4px 16px -4px rgba(140,69,165,0.4)",
+              }}
+            >
+              {contact.emailLabel[lang]}
+              <span aria-hidden="true">→</span>
+            </a>
 
-          {contact.github && (
-            <div className="mt-6">
+            {contact.github && (
               <a
                 href={contact.github}
                 target="_blank"
-                rel="noreferrer"
-                className="font-mono text-xs tracking-[0.1em] underline-offset-4 hover:underline"
-                style={{ color: "var(--color-slate)" }}
+                rel="noopener noreferrer"
+                aria-label="GitHub（新しいタブで開く）"
+                className="font-round inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5"
+                style={{
+                  borderColor: "#a86ab8",
+                  color: "#a86ab8",
+                }}
               >
-                GitHub ↗
+                GitHub
+                <span aria-hidden="true">↗</span>
               </a>
-            </div>
-          )}
+            )}
+
+            {contact.linkedin && (
+              <a
+                href={contact.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn（新しいタブで開く）"
+                className="font-round inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5"
+                style={{
+                  borderColor: "#a86ab8",
+                  color: "#a86ab8",
+                }}
+              >
+                LinkedIn
+                <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </div>
         </Reveal>
       </div>
-
-      <footer className="mt-20 border-t hairline pt-6">
-        <p className="text-center font-mono text-[11px]" style={{ color: "var(--color-slate)" }}>
-          © {new Date().getFullYear()} Tsurukai Haru — {footer.rights[lang]}
-        </p>
-      </footer>
     </section>
   );
 }

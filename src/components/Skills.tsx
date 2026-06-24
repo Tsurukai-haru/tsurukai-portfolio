@@ -3,55 +3,70 @@
 import { skills } from "@/data/content";
 import { useLanguage } from "@/lib/language-context";
 import { Reveal } from "./Reveal";
-import { SheetHeading } from "./SheetHeading";
 
 export function Skills() {
   const { lang } = useLanguage();
 
   return (
-    <section id="skills" className="grid-sheet-fine border-t hairline py-24">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+    <section id="skills" className="relative py-24">
+      <div
+        className="pointer-events-none absolute right-[5%] top-[5%] h-64 w-64 rounded-full blur-3xl"
+        style={{ backgroundColor: "#f5c8e0", opacity: 0.35 }}
+      />
+      <div
+        className="pointer-events-none absolute bottom-[10%] left-[5%] h-56 w-56 rounded-full blur-3xl"
+        style={{ backgroundColor: "#c4d8f8", opacity: 0.3 }}
+      />
+
+      <div className="relative mx-auto max-w-5xl px-8">
         <Reveal>
-          <SheetHeading
-            sheetLabel={{ ja: "SHEET 03 — SKILLS (BOM)", en: "SHEET 03 — SKILLS (BOM)" }}
-            heading={{ ja: "Skills", en: "Skills" }}
-          />
+          <h2
+            className="font-round text-3xl font-bold tracking-tight sm:text-4xl"
+            style={{ color: "#2b1d3a" }}
+          >
+            Skills
+          </h2>
+          <div className="mt-2 h-1 w-12 rounded-full" style={{ backgroundColor: "#a86ab8" }} />
         </Reveal>
 
-        {/* Styled like a bill-of-materials table from a drawing sheet */}
-        <div className="overflow-hidden border" style={{ borderColor: "rgba(26, 35, 50, 0.12)" }}>
-          <div
-            className="grid grid-cols-[80px_1fr] border-b font-mono text-[11px] tracking-[0.15em] sm:grid-cols-[120px_1fr_1.4fr]"
-            style={{ borderColor: "rgba(26, 35, 50, 0.12)", color: "var(--color-slate)", backgroundColor: "var(--color-blueprint-900)" }}
-          >
-            <span className="px-4 py-2.5">{lang === "ja" ? "区分" : "TIER"}</span>
-            <span className="px-4 py-2.5">{lang === "ja" ? "項目" : "ITEM"}</span>
-            <span className="hidden px-4 py-2.5 sm:block">{lang === "ja" ? "備考" : "NOTE"}</span>
-          </div>
-
+        <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {skills.map((tier, tierIdx) => (
-            <Reveal key={tier.tier.en} delay={tierIdx * 90}>
-              <div>
-                {tier.items.map((item, i) => (
-                  <div
-                    key={item.name}
-                    className="grid grid-cols-[80px_1fr] border-b last:border-b-0 sm:grid-cols-[120px_1fr_1.4fr]"
-                    style={{ borderColor: "rgba(26, 35, 50, 0.08)" }}
-                  >
-                    <span
-                      className="flex items-center px-4 py-3 font-mono text-[11px]"
-                      style={{ color: i === 0 ? "var(--color-copper-bright)" : "transparent" }}
-                    >
-                      {i === 0 ? tier.tier[lang] : ""}
-                    </span>
-                    <span className="px-4 py-3 font-display text-sm font-medium" style={{ color: "var(--color-linen)" }}>
-                      {item.name}
-                    </span>
-                    <span className="col-span-2 px-4 pb-3 text-xs leading-relaxed sm:col-span-1 sm:py-3 sm:text-sm" style={{ color: "var(--color-slate)" }}>
-                      {item.note[lang]}
-                    </span>
-                  </div>
-                ))}
+            <Reveal key={tier.tier.en} delay={tierIdx * 80} className="h-full">
+              <div
+                className="h-full rounded-2xl border border-[#e8d8f0] p-6 transition-all duration-200 lg:min-h-[440px] hover:-translate-y-0.5 hover:shadow-sm"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.6)",
+                  backdropFilter: "blur(8px)",
+                }}
+              >
+                <span
+                  className="font-round inline-block rounded-full px-4 py-1 text-sm font-semibold"
+                  style={{
+                    backgroundColor: "#f5eeff",
+                    color: "#a86ab8",
+                  }}
+                >
+                  {tier.tier[lang]}
+                </span>
+
+                <div className="mt-4 divide-y divide-[#f0e4f8]">
+                  {tier.items.map((item) => (
+                    <div key={item.name} className="py-3 first:pt-1">
+                      <p
+                        className="font-round text-sm font-semibold"
+                        style={{ color: "#2b1d3a" }}
+                      >
+                        {item.name}
+                      </p>
+                      <p
+                        className="mt-0.5 text-sm leading-relaxed"
+                        style={{ color: "#7a6888" }}
+                      >
+                        {item.note[lang]}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </Reveal>
           ))}

@@ -33,20 +33,33 @@ export interface StatItem {
   label: Bi;
 }
 
+export interface ProjectDetail {
+  body: Bi[];
+  highlights?: Bi[];
+}
+
 export interface ProjectItem {
   title: Bi;
   tag: Bi;
-  status: Bi;
+  status?: Bi;
   description: Bi;
   stack: string[];
   metric?: Bi;
   github?: string;
+  detail?: ProjectDetail;
 }
 
 export interface AchievementItem {
-  category: Bi;
+  date: Bi;
   title: Bi;
-  detail: Bi;
+  summary: Bi;
+  detail?: {
+    body: Bi[];
+    thumbnail?: string;
+    video?: string;
+    photos?: ResearchPhoto[];
+    links?: { label: Bi; url: string }[];
+  };
 }
 
 export interface TimelineItem {
@@ -54,6 +67,19 @@ export interface TimelineItem {
   title: Bi;
   org: Bi;
   detail?: Bi;
+}
+
+export interface ResearchPhoto {
+  src: string;
+  caption?: Bi;
+}
+
+export interface ResearchExperience {
+  title: Bi;
+  body: Bi;
+  stats?: StatItem[];
+  photos?: ResearchPhoto[];
+  achievementsLink?: boolean;
 }
 
 export const nav: NavItem[] = [
@@ -74,13 +100,13 @@ export const hero = {
     ja: "中央大学大学院 理工学研究科 電気電子情報通信工学専攻 ／ 國井研究室",
     en: "Kunii Laboratory, Dept. of Electrical, Electronic, and Communication Engineering, Chuo University",
   } as Bi,
-  headline: {
-    ja: "月面の地下空洞を走破するため、小型ローバーに2自由度の能動テールを搭載する。",
-    en: "Giving a small lunar rover a 2-DOF active tail, so it can climb where fixed wheels cannot.",
+  tagline: {
+    ja: "動くものをつくる",
+    en: "Building things that move.",
   } as Bi,
   sub: {
-    ja: "機構設計からシミュレーション構築、日常の不便を解消する個人開発まで、課題を自分の手で動くものに変えるエンジニアです。",
-    en: "From mechanism design and physics simulation to personal tools that fix everyday friction — an engineer who turns problems into things that actually work.",
+    ja: "ロボット機構設計からアプリ開発まで、領域は問わない。ワクワクするなら未知でも飛び込み、手を動かして価値にするエンジニア。",
+    en: "From robotics to apps — no domain is off-limits. If it excites me, I dive in, even into unfamiliar territory, and build until it works.",
   } as Bi,
   ctaPrimary: { ja: "研究を見る", en: "View research" } as Bi,
   ctaSecondary: { ja: "経歴を見る", en: "View experience" } as Bi,
@@ -88,110 +114,101 @@ export const hero = {
 
 export const about = {
   heading: { ja: "About Me", en: "About Me" } as Bi,
-  sheetLabel: { ja: "SHEET 01 — PROFILE", en: "SHEET 01 — PROFILE" } as Bi,
-  paragraphs: [
+  intro: [
     {
-      ja: "中央大学大学院 電気電子情報通信工学専攻、國井研究室に所属しています。月の地下に広がる溶岩洞窟（Lava Tube）の探査を目標に、小型2輪ローバーの機構設計と、その有効性を検証する物理シミュレーション環境の構築に取り組んできました。",
-      en: "I'm a graduate student in the Kunii Laboratory at Chuo University. My work centers on mechanism design and physical-simulation verification for a small two-wheeled rover built to explore lunar lava tubes — underground caves now studied as candidate habitats.",
+      ja: "大学院では月面の溶岩洞窟探査を目標に小型二輪ローバの機構設計に取り組み、MATLABシミュレーションから豪州での野外実証まで幅広く経験してきました。",
+      en: "In graduate school, I worked on mechanism design for a small two-wheeled rover aimed at exploring lunar lava tubes, gaining broad experience from MATLAB simulation to field trials in Australia.",
     },
     {
-      ja: "設計の発想の起点は、ボルダリングジムでルートセッターとして150本以上のコースを組んできた経験です。セッティングでは、登り手にしてほしい動作（ゴールムーブ）を先に決め、そこからホールドの配置を逆算します。ロボットの機構設計でも同じ考え方を採用し、地形に対してどう動いてほしいかを先に定義し、そこから必要な自由度と制御則を逆算しました。",
-      en: "The design approach traces back to setting bouldering routes — over 150 of them — at a climbing gym. Route-setting works backward: you decide the move you want the climber to make, then place the holds to produce it. I apply the same logic to mechanism design: define the motion you need from the terrain first, then derive the degrees of freedom and control law that produce it.",
-    },
-    {
-      ja: "チームでの実証実験では、一人で抱え込まず現場で手を動かしながら合意形成することを大切にしています。豪州での野外実証実験では、想定外の砂質でローバーの車輪が空転する問題が発生しました。車輪へスポンジを取り付ける改良を発案し、チームで取り付け方法を発展させながら、実際の取り付け作業を主導しました。",
-      en: "In field testing, I try not to solve problems alone — I'd rather work through them with the team, hands-on, on site. During an outdoor field trial in Australia, the rover's wheels lost traction in sand that behaved differently than expected. I proposed attaching sponge material to the wheels, then worked with the team to refine the method and led the actual fitting.",
+      ja: "研究の外でも、Webアプリやデスクトップツール開発に幅を広げ、設計から実装まで自分でやり切ることが好きです。",
+      en: "Outside research, I have expanded into web and desktop tool development — I enjoy seeing things through from design to implementation on my own.",
     },
   ] as Bi[],
-  values: [
-    {
-      title: { ja: "現地現物", en: "See it, touch it" } as Bi,
-      body: {
-        ja: "シミュレーションで終わらせず、実機・実環境で確かめる。",
-        en: "Don't stop at simulation — verify on real hardware, in the real environment.",
-      } as Bi,
-    },
-    {
-      title: { ja: "逆算設計", en: "Design backward" } as Bi,
-      body: {
-        ja: "欲しい動作・結果を先に定義し、そこから自由度と制御を逆算する。",
-        en: "Define the motion or outcome you want first, then derive the degrees of freedom and control law.",
-      } as Bi,
-    },
-    {
-      title: { ja: "チームでの主体性", en: "Lead inside the team" } as Bi,
-      body: {
-        ja: "一人で抱えず、提案してチームで発展させ、実行は自分が引き受ける。",
-        en: "Propose, let the team develop the idea further, and take ownership of execution.",
-      } as Bi,
-    },
+  chips: [
+    { label: { ja: "中央大学大学院 理工学研究科", en: "Chuo University, Graduate School of Sci. & Eng." } as Bi },
+    { label: { ja: "千葉県出身", en: "From Chiba, Japan" } as Bi },
+    { label: { ja: "電気電子情報通信工学専攻", en: "Electrical, Electronic & Communication Eng." } as Bi },
+    { label: { ja: "Webアプリ・ツール開発", en: "Web App & Tool Development" } as Bi },
+    { label: { ja: "月面探査ローバ", en: "Lunar Rover" } as Bi },
+    { label: { ja: "ボルダリング・ハンドボール", en: "Bouldering & Handball" } as Bi },
   ],
 };
 
 export const skills: SkillTier[] = [
   {
-    tier: { ja: "主力", en: "Core" },
+    tier: { ja: "開発言語", en: "Languages" },
     items: [
-      { name: "Autodesk Fusion", note: { ja: "CAD：能動テール機構の試作30点以上を設計", en: "CAD — designed 30+ prototype iterations of the active tail mechanism" } },
-      { name: "MATLAB / Simscape Multibody", note: { ja: "3次元物理シミュレーション環境をゼロから構築", en: "Built the 3D multibody physics simulation environment from scratch" } },
       { name: "Python", note: { ja: "シミュレーション結果の解析・可視化スクリプトを作成", en: "Analysis and visualization scripts for simulation results" } },
+      { name: "MATLAB / Simulink", note: { ja: "3次元物理シミュレーション環境を独学で構築", en: "Built the 3D multibody physics simulation environment through self-study" } },
+      { name: "C", note: { ja: "大学講義レベル", en: "Learned through university coursework" } },
     ],
   },
   {
-    tier: { ja: "実務活用", en: "Applied" },
+    tier: { ja: "ツール", en: "Tools" },
     items: [
-      { name: "Stateflow", note: { ja: "ローバーの行動戦略（探索的接地・スタック回避）をステートマシンで実装", en: "Implemented the rover's behavior strategy (exploratory contact, stuck-recovery) as a state machine" } },
-      { name: "3Dプリント（FDM）", note: { ja: "機構プロトタイプの試作・反復検証", en: "Prototyping and iteration for mechanism design" } },
+      { name: "Autodesk Fusion", note: { ja: "CAD：多岐にわたる構造を設計", en: "CAD — designed a wide variety of mechanical structures" } },
+      { name: "Simscape Multibody", note: { ja: "MATLAB上の多体動力学シミュレーション環境", en: "Multibody dynamics simulation environment built on MATLAB" } },
+      { name: "Stateflow", note: { ja: "ローバの行動戦略をステートマシンで実装", en: "Implemented the rover's behavior strategy as a state machine" } },
+      { name: "LaTeX", note: { ja: "卒業論文・研究レポートの執筆", en: "Thesis and research report writing" } },
+      { name: "Git / GitHub", note: { ja: "バージョン管理・個人開発プロジェクトの管理", en: "Version control and personal project management" } },
+    ],
+  },
+  {
+    tier: { ja: "ハードウェア・機器", en: "Hardware" },
+    items: [
       { name: "Raspberry Pi", note: { ja: "ローバー実機の制御基盤として運用", en: "Used as the onboard control platform on the physical rover" } },
+      { name: "Arduino", note: { ja: "学部実験で使用。現在はTAとして同授業で指導", en: "Used in undergraduate lab experiments; currently teaching it as a TA" } },
+      { name: "RAISE3D（Pro3 / Pro3 HS）", note: { ja: "FDM方式での機構プロトタイプ試作・反復検証", en: "FDM-based prototyping and iterative verification of mechanism designs" } },
+      { name: "Markforged（FX10 / MarkTwo）", note: { ja: "高強度部品の試作・反復検証", en: "Prototyping and iterative verification of high-strength parts" } },
+      { name: "OptiTrack", note: { ja: "モーションキャプチャによる軌跡・スリップ率の計測", en: "Motion-capture measurement of trajectory and slip ratio on the physical rover" } },
     ],
   },
   {
-    tier: { ja: "補助", en: "Supporting" },
+    tier: { ja: "OS", en: "OS / Platforms" },
     items: [
-      { name: "OptiTrack", note: { ja: "モーションキャプチャによる実機の軌跡・スリップ率の計測", en: "Motion-capture measurement of trajectory and slip ratio on the physical rover" } },
-      { name: "Excel（VLOOKUP等）", note: { ja: "アルバイト先の出席管理を自動化し、作業時間を半減", en: "Automated attendance lookups at a part-time job, cutting the task's time roughly in half" } },
+      { name: "Windows", note: { ja: "日常使用", en: "Daily use" } },
+      { name: "macOS", note: { ja: "日常使用", en: "Daily use" } },
+      { name: "Linux", note: { ja: "時々使用", en: "Occasional use" } },
     ],
   },
 ];
 
 export const research = {
-  sheetLabel: { ja: "SHEET 02 — RESEARCH", en: "SHEET 02 — RESEARCH" } as Bi,
-  heading: {
-    ja: "小型2輪ローバーのための2自由度能動テール機構",
-    en: "A 2-DOF Active Tail Mechanism for a Small Two-Wheeled Rover",
-  } as Bi,
   intro: {
-    ja: "月の地下に広がる溶岩チューブは、将来の居住拠点として注目される一方、未踏の不整地が続く環境です。小型化したローバーは軽量で群展開に向く反面、静的安定性が低く、車輪半径を超える段差で転倒・スタックしやすいという課題を抱えます。本研究では、この課題に対し2自由度の能動テール機構と、その運用戦略を提案しました。",
-    en: "Lunar lava tubes are gaining attention as candidate sites for future habitats, but they remain unmapped, rugged terrain. Small rovers are light enough to deploy in swarms, but their low static stability makes them prone to tipping or getting stuck on steps taller than their wheel radius. This research proposes a 2-DOF active tail mechanism and behavior strategy to address that.",
+    ja: "月面の溶岩洞窟探査を目指す小型群ロボットの研究に、学部4年から大学院にかけて取り組んできました。JAXAをはじめ複数の研究機関との共同プロジェクトとして進められました。",
+    en: "From my senior undergraduate year into graduate school, I have been working on a small swarm robot project aimed at exploring lunar lava tubes — a joint effort with JAXA and other institutions.",
   } as Bi,
-  approachHeading: { ja: "アプローチ", en: "Approach" } as Bi,
-  approach: [
+  experiences: [
     {
-      ja: "第1関節でテールを持ち上げて車軸を引き上げ（リフト）、第2関節で地面を蹴り出してボディを段差奥へ押し出す（リーチ・推進）。2軸を協調動作させ、車軸が段差エッジに衝突しない軌道を生成する。",
-      en: "Joint 1 lifts the tail to raise the wheel axle; joint 2 pushes off the ground to drive the body further onto the step. Coordinating the two joints generates a trajectory that clears the step edge without collision.",
+      title: { ja: "卒業研究 — 能動テール機構の設計と検証", en: "Graduation Research — Active Tail Mechanism" } as Bi,
+      body: {
+        ja: "小型ローバーは軽量で群展開に向く一方、車輪半径を超える段差での転倒・スタックが課題です。この問題を解決するため、テールを使って車軸を持ち上げる機構を設計しました。検証のための3D物理シミュレーション環境をゼロから独力で構築し、機構の有効性を数値で示しました。",
+        en: "Small rovers are light enough to swarm, but prone to tipping and getting stuck on steps taller than their wheel radius. To solve this, I designed a mechanism that uses a tail to lift the wheel axle over such obstacles, and built a 3D physics simulation environment from scratch to verify the design quantitatively.",
+      } as Bi,
+      stats: [
+        { value: "1.5", unit: "×", label: { ja: "登攀できる段差の高さ（車輪半径比、固定テールは 0.8 倍）", en: "Max step height in wheel radii (fixed tail: 0.8×)" } },
+        { value: "2", unit: "×", label: { ja: "固定テールと比べた不整地での移動距離", en: "Rough-terrain travel distance vs. fixed tail" } },
+      ],
     },
     {
-      ja: "検証に先立ち、特定のハードウェア構成に依存しない一般化モデルでMATLAB/Simscape Multibodyの3次元物理シミュレーション環境を独力で構築。グラウザ（突起）形状を再現した点群接触モデルや、固定テールの実機データに基づく摩擦パラメータのチューニングなど、シミュレーションの忠実度を実機実験から逆算して高めた。",
-      en: "Before building specific hardware, I built a 3D multibody physics simulation in MATLAB/Simscape using a hardware-agnostic generalized model. Fidelity was tuned against real hardware: a point-cloud contact model reproducing the wheel's grouser geometry, and friction parameters calibrated from physical fixed-tail step-climbing data.",
+      title: { ja: "機体改良 — 跳躍パッドはデモロボットに採用", en: "Hardware Development — Jumping Pad Adopted for Demo Robot" } as Bi,
+      body: {
+        ja: "ロボットの車体や跳躍パッドなど、機体各部の形状改良を担当しました。跳躍パッドでは30個以上のCADモデルを作成し、3Dプリントと実機テストを繰り返して走行・跳躍性能のバランスを追求しました。最終的に私が設計した跳躍パッドがMoonshotプロジェクトの共同研究デモロボットに採用されました。",
+        en: "Worked on hardware improvements across the robot including the vehicle body and jumping pads. Created over 30 CAD models, iterating through 3D printing and real-machine testing to find the right balance between running and jumping performance. My final jumping pad design was adopted for the Moonshot project's collaborative demo robot.",
+      } as Bi,
     },
     {
-      ja: "不整地走行では、テールを周期駆動して接地機会を確保する「探索的接地制御」と、オドメトリでスタックを検知してテールでボディを持ち上げる「スタック回避制御」を組み合わせたハイブリッド制御を実装し、固定テール・跳躍機構と比較評価した。",
-      en: "For rough-terrain traversal, I implemented a hybrid controller combining periodic tail motion to keep ground contact (\"exploratory contact control\") with odometry-based stuck-detection that triggers an active lift-and-push recovery, and benchmarked it against a fixed tail and a hopping mechanism.",
+      title: { ja: "オーストラリア 洞窟実証実験", en: "Field Experiments in Australian Caves" } as Bi,
+      body: {
+        ja: "国際共同研究の一環として、研究室の選抜5名のうちハードウェア担当の1名として参加しました。現地での課題発見・即時改良・データ取得に貢献しました。",
+        en: "Joined as the hardware representative among 5 selected lab members for field experiments as part of the international collaboration. Contributed to on-site problem discovery, real-time hardware adjustments, and data collection.",
+      } as Bi,
+      achievementsLink: true,
     },
-  ] as Bi[],
-  stats: [
-    { value: "1.5", unit: "×", label: { ja: "車輪半径に対する段差登攀限界（固定テール比 0.8倍 → 1.5倍）", en: "Step-climbing limit, as a multiple of wheel radius (vs. 0.8× for a fixed tail)" } },
-    { value: "2", unit: "×", label: { ja: "不整地走行における移動距離（固定テール比、ハイブリッド制御）", en: "Net travel distance on rough terrain vs. a fixed tail (hybrid control)" } },
-    { value: "30", unit: "+", label: { ja: "CADで試作・検証したテール機構のプロトタイプ数", en: "Tail-mechanism prototype iterations designed and tested in CAD" } },
-  ] as StatItem[],
-  closingHeading: { ja: "学びと今後", en: "Takeaway & next step" } as Bi,
-  closing: {
-    ja: "参照できる先行実装が少ない中で、モデルベースのアプローチによって機構の有効性を定量的に示せたことが、この研究の核です。一方で、検証は物理シミュレーション中心であり、実機への展開（Sim-to-Realギャップの解消）が今後の課題です。",
-    en: "With few prior implementations to reference, the core result is showing the mechanism's effectiveness quantitatively through a model-based approach. The verification so far is simulation-centric, so closing the sim-to-real gap on physical hardware is the next step.",
-  } as Bi,
+  ] as ResearchExperience[],
   context: {
-    ja: "本研究は、内閣府ムーンショット型研究開発事業 目標3「未知未踏領域における拠点建築のための集団共有知能をもつ進化型ロボット群」プロジェクトの一環として、JAXAを含む複数の研究機関と連携して進められました（プロジェクトは完了済み）。",
-    en: "This work was conducted as part of the Cabinet Office's Moonshot R&D Program, Goal 3 project on evolving robot swarms for outpost construction in uncharted terrain, in collaboration with several institutions including JAXA (the project has since concluded).",
+    ja: "内閣府ムーンショット型研究開発事業 目標3プロジェクトの一環として、JAXAを含む複数の研究機関と連携して進められました（プロジェクトは完了済み）。",
+    en: "This work was conducted as part of the Cabinet Office's Moonshot R&D Program, Goal 3, in collaboration with JAXA and other institutions (the project has since concluded).",
   } as Bi,
 };
 
@@ -199,115 +216,279 @@ export const projects: ProjectItem[] = [
   {
     title: { ja: "Claude 使用量メニューバーアプリ", en: "Claude Usage Menu Bar App" },
     tag: { ja: "個人開発", en: "Personal project" },
-    status: { ja: "自己利用中", en: "In use" },
     description: {
-      ja: "Claude の5時間ごとの使用量をmacOSのメニューバーにリアルタイム表示するネイティブアプリ。認証情報はmacOS Keychainに保存し、ログイン時自動起動にも対応。自分が毎日使うツールを自分で作った。",
-      en: "A native macOS menu bar app that shows Claude's 5-hour usage allowance in real time. Credentials are stored securely in the macOS Keychain; supports launch at login. Built it because I needed it myself.",
+      ja: "Claude の5時間ごとの使用量をmacOSのメニューバーにリアルタイム表示するネイティブアプリ。認証情報はmacOS Keychainに保存し、ログイン時自動起動にも対応。毎日の作業で実際に使用している。",
+      en: "A native macOS menu bar app that shows Claude's 5-hour usage allowance in real time. Credentials are stored securely in the macOS Keychain; supports launch at login. Used daily in practice.",
     },
     stack: ["Swift", "SwiftUI", "macOS 14+"],
-    metric: { ja: "毎日自分で使用中", en: "Used daily by myself" },
     github: "https://github.com/Tsurukai-haru/claude-usage-menubar",
-  },
-  {
-    title: { ja: "能動テール機構の物理シミュレーション環境構築", en: "Physics Simulation Environment for the Active Tail Mechanism" },
-    tag: { ja: "研究", en: "Research" },
-    status: { ja: "完了（卒業論文として提出）", en: "Completed — submitted as graduation thesis" },
-    description: {
-      ja: "MATLAB/Simscape Multibodyを用いた3次元物理シミュレーションをゼロから構築。段差登攀・不整地走行の両実験で、固定テール・跳躍機構との比較評価を行った。",
-      en: "Built a 3D multibody physics simulation in MATLAB/Simscape from the ground up, and used it to benchmark the active tail against a fixed tail and a hopping mechanism across step-climbing and rough-terrain trials.",
+    detail: {
+      body: [
+        {
+          ja: "Claude APIには5時間ごとにリセットされる使用量上限があります。残り使用量が見えないまま作業すると、制限に突然当たって中断してしまう。この不満を解消するために開発したmacOSのネイティブメニューバーアプリです。",
+          en: "Claude's API enforces a usage limit that resets every 5 hours. Without visibility into what's remaining, you hit the cap mid-work with no warning. This native macOS menu bar app was built to fix that friction.",
+        },
+        {
+          ja: "APIキーはプレーンなファイルではなくmacOS Keychainに安全に保存し、ログイン時の自動起動にも対応。自分が毎日使うツールとして、シンプルさを最優先に設計しました。",
+          en: "The API key is stored in macOS Keychain rather than a plain file, and the app supports launch at login. Built for daily personal use — simplicity was the design priority.",
+        },
+      ],
+      highlights: [
+        { ja: "5時間ウィンドウの使用量をメニューバーにリアルタイム表示", en: "Real-time usage for the 5-hour window shown in the menu bar" },
+        { ja: "認証情報はmacOS Keychainに安全に保存", en: "Credentials stored securely in macOS Keychain" },
+        { ja: "ログイン時自動起動に対応", en: "Supports launch at login" },
+        { ja: "自己利用を目的に開発・毎日運用中", en: "Developed for personal use; used daily" },
+      ],
     },
-    stack: ["MATLAB", "Simscape Multibody", "Stateflow", "Python"],
-    metric: { ja: "段差登攀 1.5倍／移動距離 約2倍", en: "1.5× step-climbing, ~2× travel distance" },
   },
   {
-    title: { ja: "ボルダリングジム 受付・出席管理アプリ", en: "Front-Desk & Attendance App for a Bouldering Gym" },
+    title: { ja: "スマホ写真 一括圧縮ツール", en: "Batch Photo Compressor" },
     tag: { ja: "個人開発", en: "Personal project" },
-    status: { ja: "開発中（プロトタイプ）", en: "In progress — prototype" },
     description: {
-      ja: "アルバイト先のジムで、紙の出席表をExcelへ手作業転記している運用に着目。会員番号入力で氏名・年齢区分を自動表示し、利用時間から料金を自動計算するアプリを設計・開発中。",
-      en: "At the gym where I work part-time, staff hand-transcribe paper attendance sheets into Excel every day. I'm designing and building an app that looks up a member by ID, auto-fills their name and age tier, and calculates the fee from check-in/out time.",
+      ja: "一般的なWeb圧縮サービスは画像を外部サーバーへ送信するため、プライベートな写真には使いにくい。この課題を解決するためローカルで完結するツールを開発した。JPEG・PNG・WebPに対応し、目標ファイルサイズを指定して一括圧縮、ZIP形式でまとめてダウンロードできる。",
+      en: "Common online compression tools upload your photos to external servers — a privacy concern for personal images. This tool runs entirely in the browser with no backend. Supports JPEG, PNG, and WebP; set a target size, compress in batch, and download the results as a single ZIP.",
+    },
+    stack: ["HTML", "CSS", "JavaScript"],
+    github: "https://github.com/Tsurukai-haru/photo-resizer",
+    detail: {
+      body: [
+        {
+          ja: "「写真を圧縮したいけど、外部サービスに送りたくない」というニーズから生まれたツールです。一般的なWeb圧縮サービスは画像を外部サーバーにアップロードする仕組みのため、プライベートな写真には使いづらい場面があります。",
+          en: "Started from a simple need: compress photos without uploading them to a stranger's server. Most web-based compression tools route your images through external servers — a real friction point for personal photos.",
+        },
+        {
+          ja: "HTMLとJavaScriptのみで実装したサーバーレスなウェブアプリで、バックエンドなしでブラウザ上ですべての処理が完結します。Canvas APIで画像を最大幅2000pxに収めたうえで、JPEG品質を0.9から0.1まで段階的に下げて目標サイズに近づけます。JSZipを使って複数ファイルを一括ZIPダウンロードできます。",
+          en: "A serverless web app built with plain HTML and JavaScript — no backend, everything runs in the browser. Uses the Canvas API to cap images at 2000px wide, then lowers JPEG quality incrementally from 0.9 to 0.1 until the target file size is reached. Multiple files are bundled and downloaded as a single ZIP via JSZip.",
+        },
+      ],
+      highlights: [
+        { ja: "すべての処理がローカルで完結し、画像が外部に送信されない", en: "All processing is local — no image data leaves your machine" },
+        { ja: "JPEG・PNG・WebPに対応した一括圧縮", en: "Batch compression supporting JPEG, PNG, and WebP" },
+        { ja: "Canvas APIで最大2000pxリサイズ後、JPEG品質を0.9から0.1まで段階的に下げて目標サイズに調整", en: "Canvas API resizes to max 2000px width, then lowers JPEG quality from 0.9 to 0.1 to hit the target size" },
+        { ja: "圧縮結果をZIPでまとめてダウンロード", en: "Download all compressed files as a single ZIP" },
+      ],
+    },
+  },
+  {
+    title: { ja: "ボルダリングジム 業務支援アプリ", en: "Bouldering Gym Operations App" },
+    tag: { ja: "個人開発", en: "Personal project" },
+    status: { ja: "開発中", en: "In progress" },
+    description: {
+      ja: "アルバイト先のジムで、紙の出席表をExcelへ手作業転記している運用に着目。会員番号入力で受付・料金計算を自動化するほか、在庫管理など現場の事務作業を一元化するアプリを設計・開発中。",
+      en: "Noticed staff at the gym manually transcribing paper attendance sheets into Excel each day. Building an app to automate check-in and fee calculation, while expanding toward unified office operations including inventory management.",
     },
     stack: ["React", "Vite", "FastAPI", "SQLite"],
-    metric: { ja: "対象業務：日次の手書き転記作業", en: "Target: daily paper-to-spreadsheet transcription" },
-  },
-  {
-    title: { ja: "Excelによる出席管理の自動化", en: "Spreadsheet Automation for Attendance Lookups" },
-    tag: { ja: "業務改善", en: "Process improvement" },
-    status: { ja: "運用中", en: "In use" },
-    description: {
-      ja: "会員番号から氏名を引き当てるVLOOKUP関数を導入し、手作業で行っていた出席記録の転記作業を効率化した。",
-      en: "Introduced a VLOOKUP-based lookup from member ID to name, streamlining a previously manual attendance-transcription task.",
+    detail: {
+      body: [
+        {
+          ja: "アルバイト先のボルダリングジムでは、受付スタッフが紙の出席票をExcelに手作業で転記する業務が毎日発生していました。会員番号を入力するだけで氏名・年齢区分を自動表示し、入退館時刻から料金を自動計算するアプリを設計・開発中です。",
+          en: "At the bouldering gym where I work, staff manually transcribe paper attendance sheets into Excel every day. Building an app that looks up a member by ID, auto-fills their name and age tier, and calculates fees from check-in/out times.",
+        },
+        {
+          ja: "現場へのヒアリングを重ねるなかで、受付・料金計算にとどまらず在庫管理など複数の事務作業を一元化するニーズが浮かび上がりました。フロントエンドはReact＋Vite、バックエンドはFastAPI＋SQLiteで構築し、操作ミスが起きにくいUIを目指して設計しています。",
+          en: "Through repeated conversations with staff, the scope expanded beyond check-in to cover inventory and other office tasks in one place. The frontend uses React + Vite; the backend uses FastAPI and SQLite, with a UI designed to minimize input errors.",
+        },
+      ],
+      highlights: [
+        { ja: "会員番号入力で氏名・年齢区分を自動表示、料金を自動計算", en: "Auto-fills member info and calculates fees from check-in/out times" },
+        { ja: "在庫管理など複数の事務業務を一元化", en: "Unified management of inventory and other office workflows" },
+        { ja: "現場スタッフのヒアリングをもとに要件を継続的に整理", en: "Requirements continuously refined through on-site staff interviews" },
+      ],
     },
-    stack: ["Excel"],
-    metric: { ja: "作業時間を約半分に短縮", en: "Cut the task's time roughly in half" },
   },
 ];
 
 export const achievements: AchievementItem[] = [
   {
-    category: { ja: "研究成果", en: "Research" },
-    title: { ja: "段差登攀性能：車輪半径の1.5倍", en: "Step-climbing performance: 1.5× wheel radius" },
-    detail: { ja: "固定テール機構の限界（0.8倍）を、能動テール機構により大幅に更新。", en: "A substantial improvement over the fixed-tail limit of 0.8×, achieved with the active tail mechanism." },
+    date: { ja: "2026年5月", en: "May 2026" },
+    title: { ja: "BS日テレ「ガリレオX」にて研究内容が紹介", en: "Research featured on BS Nippon TV 'Galileo X'" },
+    summary: {
+      ja: "月面探査ロボットの研究について、BS日テレ「ガリレオX」にて紹介されました。実験中の様子も本編中に写っています。",
+      en: "Coverage of the lunar exploration rover research was broadcast on the BS Nippon TV program 'Galileo X,' including footage from my experiments.",
+    },
+    detail: {
+      body: [
+        {
+          ja: "月にあるとされる溶岩洞窟の探査を目標とした小型二輪ローバの研究について、BS日テレ「ガリレオX」にて紹介されました。",
+          en: "Research on a small two-wheeled rover aimed at exploring lunar lava tubes was featured on the BS Nippon TV program 'Galileo X.'",
+        },
+        {
+          ja: "実験中の様子とともに研究内容が紹介されました。",
+          en: "The research was introduced alongside footage from my experiments.",
+        },
+      ],
+      video: "https://www.youtube.com/embed/15Ob3HZnR8k",
+      links: [
+        { label: { ja: "番組本編（YouTube）", en: "Program on YouTube" }, url: "https://www.youtube.com/watch?v=15Ob3HZnR8k" },
+      ],
+    },
   },
   {
-    category: { ja: "研究成果", en: "Research" },
-    title: { ja: "不整地走行距離：固定テール比 約2倍", en: "Rough-terrain travel distance: ~2× a fixed tail" },
-    detail: { ja: "スタック検知に基づくハイブリッド制御により、極限不整地でも走行を継続。", en: "A hybrid, stuck-detection-driven controller kept the rover moving even in extreme rough terrain." },
+    date: { ja: "2026年5月", en: "May 2026" },
+    title: { ja: "SPEXA 国際宇宙ビジネス展 出展", en: "Exhibited at SPEXA International Space Business Exhibition" },
+    summary: {
+      ja: "ムーンショット型研究開発事業の一環として、月面探査ロボットの研究成果を展示。",
+      en: "Exhibited research on lunar exploration robotics as part of the Moonshot R&D Program.",
+    },
+    detail: {
+      body: [
+        {
+          ja: "ムーンショット型研究開発事業の一環として、SPEXA 国際宇宙ビジネス展に研究成果を出展しました。",
+          en: "As part of the Moonshot R&D Program, research results on lunar exploration robotics were exhibited at the SPEXA International Space Business Exhibition.",
+        },
+        {
+          ja: "展示ブースの設営から来場者への技術説明まで実際に現地で担当しました。",
+          en: "I was responsible for hands-on tasks on-site, from setting up the exhibition booth to providing technical explanations to visitors.",
+        },
+      ],
+    },
   },
   {
-    category: { ja: "プロジェクト", en: "Project" },
-    title: { ja: "ムーンショット型研究開発事業 目標3 プロジェクト参画", en: "Participation in Moonshot R&D Program, Goal 3" },
-    detail: { ja: "JAXAを含む複数機関と連携した国の研究開発プロジェクトに参加（プロジェクトは完了済み）。", en: "Took part in a national R&D project run with JAXA and other institutions (the project has since concluded)." },
+    date: { ja: "2026年4月", en: "Apr 2026" },
+    title: { ja: "大学院給付奨学金", en: "Graduate School Scholarship (grant-type)" },
+    summary: {
+      ja: "返還不要の給付型大学院奨学金を受給。",
+      en: "Recipient of a non-repayable, grant-type graduate scholarship.",
+    },
+    detail: {
+      body: [
+        {
+          ja: "中央大学大学院において、返還を要しない給付型奨学金を受給しました。",
+          en: "Received a non-repayable, grant-type scholarship at Chuo University Graduate School.",
+        },
+      ],
+    },
   },
   {
-    category: { ja: "学業", en: "Academics" },
-    title: { ja: "成績優秀者代表", en: "Top-student representative" },
-    detail: { ja: "学部における成績優秀者の代表として証書を授与。", en: "Recognized as the representative top-performing student in the undergraduate program." },
+    date: { ja: "2026年3月", en: "Mar 2026" },
+    title: { ja: "成績優秀者代表", en: "Top-Student Representative" },
+    summary: {
+      ja: "学科における成績優秀者の代表として証書を授与。",
+      en: "Recognized as the representative top-performing student in the department.",
+    },
+    detail: {
+      body: [
+        {
+          ja: "中央大学 電気電子情報通信工学科において、成績優秀者の代表として証書を授与されました。",
+          en: "Awarded a certificate as the representative top-performing student in the Department of Electrical, Electronic, and Communication Engineering at Chuo University.",
+        },
+      ],
+    },
   },
   {
-    category: { ja: "学業", en: "Academics" },
+    date: { ja: "2026年3月", en: "Mar 2026" },
     title: { ja: "優良認定書", en: "Certificate of Excellence" },
-    detail: { ja: "学業成績に対する優良認定書を授与。", en: "Awarded a certificate of excellence for academic performance." },
+    summary: {
+      ja: "学業成績に対する優良認定書を授与。",
+      en: "Awarded a certificate of excellence for academic performance.",
+    },
+    detail: {
+      body: [
+        {
+          ja: "学業成績に対する優良認定書を授与されました。",
+          en: "Awarded a certificate of excellence in recognition of academic performance.",
+        },
+      ],
+    },
   },
   {
-    category: { ja: "学業", en: "Academics" },
-    title: { ja: "大学院給付奨学金", en: "Graduate school scholarship (grant-type)" },
-    detail: { ja: "返還を要しない給付型の大学院奨学金を受給。", en: "Recipient of a non-repayable, grant-type graduate scholarship." },
+    date: { ja: "2026年1月", en: "Jan 2026" },
+    title: { ja: "NHK BS番組にて研究内容が紹介", en: "Research featured on NHK BS program" },
+    summary: {
+      ja: "JAXA等と共同開発中の月面探査ロボットの研究について取材を受け、番組内で放送されました。",
+      en: "The lunar exploration rover research, jointly developed with JAXA and others, was covered and broadcast on the NHK BS program.",
+    },
+    detail: {
+      body: [
+        {
+          ja: "JAXAや産業技術総合研究所などと共同で進めている月面探査ロボットの研究について、NHK BSの取材を受けました。",
+          en: "The lunar exploration rover research, conducted jointly with JAXA and AIST, was covered by NHK BS.",
+        },
+        {
+          ja: "取材陣への説明・操作を担当し、映像にも出演しています。",
+          en: "I was in charge of explaining the research and operating the robot for the crew, and appear in the broadcast.",
+        },
+      ],
+      thumbnail: "https://imgu.web.nhk/static/assets/images/tvepisode/te/JZ37MV76G5/JZ37MV76G5-eyecatch_4c37bbd521090ab62701047e74977cef.jpg",
+      links: [
+        { label: { ja: "番組ページ（NHK）", en: "Program page (NHK)" }, url: "https://www.web.nhk/tv/an/frontiers/pl/series-tep-PM34JL2L14/ep/JZ37MV76G5" },
+      ],
+    },
   },
   {
-    category: { ja: "課外活動", en: "Outside research" },
-    title: { ja: "ボルダリングジム ルートセッター：150本以上", en: "Bouldering route setter: 150+ routes" },
-    detail: { ja: "ゴールムーブから逆算する設計思考を、研究の機構設計にも応用。", en: "The backward-from-the-goal-move design thinking carried directly into mechanism design for the rover." },
+    date: { ja: "2025年11月", en: "Nov 2025" },
+    title: { ja: "日豪共同 実証実験への参加", en: "Japan-Australia Joint Field Trials" },
+    summary: {
+      ja: "オーストラリアの洞窟にて実証実験に参加し、各研究機関の公式Webサイトに掲載されました。",
+      en: "Participated in field trials in an Australian cave; featured on the official websites of multiple research institutions including JAXA and CSIRO.",
+    },
+    detail: {
+      body: [
+        {
+          ja: "研究プロジェクトの一環として、オーストラリアのクイーンズランド州にある洞窟での実証実験に参加しました。この実験の様子は、CSIROやJAXAをはじめ、複数の研究機関の公式Webサイトで紹介されています。",
+          en: "As part of the research project, I participated in field trials in a cave in Queensland, Australia. The experiment was covered on the official websites of multiple institutions including CSIRO and JAXA.",
+        },
+        {
+          ja: "CSIROの記事では実名入りで紹介していただきました。",
+          en: "I was introduced by name in a CSIRO article.",
+        },
+      ],
+      photos: [
+        {
+          src: "https://research.csiro.au/robotics/wp-content/uploads/sites/592/2026/03/japan-australia-field-trials-group-hi-1536x1025.jpg",
+          caption: {
+            ja: "オーストラリア・日本の共同研究チーム © CSIRO, Katrina Lo Surdo",
+            en: "Australia–Japan joint research team © CSIRO, Katrina Lo Surdo",
+          },
+        },
+      ],
+      links: [
+        { label: { ja: "CSIRO 公式サイト", en: "CSIRO official site" }, url: "https://research.csiro.au/robotics/csiro-japan-collaboration-advances-lunar-cave-robotics/" },
+        { label: { ja: "JAXA 公式サイト", en: "JAXA official site" }, url: "https://www.isas.jaxa.jp/topics/004219.html" },
+        { label: { ja: "中央大学 公式サイト", en: "Chuo University official site" }, url: "https://www.chuo-u.ac.jp/research/news/2026/03/84967/" },
+        { label: { ja: "ムーンショット型研究開発事業", en: "Moonshot R&D Program" }, url: "https://moonshot.r.chuo-u.ac.jp/kunii/report/912/" },
+      ],
+    },
   },
 ];
 
 export const experience: TimelineItem[] = [
   {
-    period: { ja: "2026.04 — 現在", en: "Apr 2026 — present" },
-    title: { ja: "理工学研究科 電気電子情報通信工学専攻 修士課程", en: "M.S. student, Electrical, Electronic, and Communication Engineering" },
-    org: { ja: "中央大学大学院 國井研究室（2028年3月卒業予定）", en: "Chuo University Graduate School, Kunii Laboratory (expected graduation: March 2028)" },
+    period: { ja: "2019.04 — 2022.03", en: "Apr 2019 — Mar 2022" },
+    title: { ja: "千葉県立小金高等学校", en: "Chiba Prefectural Koganei High School" },
+    org: { ja: "普通科", en: "General Course" },
+    detail: { ja: "ハンドボール部に所属し、競技に熱中した。", en: "Member of the school handball club, where I became devoted to the sport." },
   },
   {
     period: { ja: "2022.04 — 2026.03", en: "Apr 2022 — Mar 2026" },
     title: { ja: "理工学部 電気電子情報通信工学科", en: "B.Eng., Electrical, Electronic, and Communication Engineering" },
-    org: { ja: "中央大学（卒業論文：小型2輪ローバに適した能動テールのための準静的モデルと物理シミュレーションによる機構設計と有効性検証に関する研究）", en: "Chuo University (Graduation thesis: Mechanism Design and Effectiveness Verification Using Quasi-Static Models and Physical Simulation for an Active Tail Suited to Small Two-Wheeled Rovers)" },
+    org: { ja: "中央大学", en: "Chuo University" },
+    detail: { ja: "電気・電子・情報通信分野を幅広く学ぶ。JAXA・産総研・東京農工大などとの共同プロジェクトに取り組む研究室に所属し、シミュレーションおよびJAXA探査実験棟での実証実験に従事。2025年11月にはオーストラリアでの国際共同実験にも参加した。", en: "Studied broadly across electrical, electronic, and information-communication engineering. Joined a lab conducting joint research with JAXA, AIST, and Tokyo University of Agriculture and Technology, contributing to simulation work and experiments at JAXA's exploration testbed. Also participated in international field trials in Australia in November 2025." },
   },
   {
     period: { ja: "在学中", en: "Ongoing, alongside studies" },
-    title: { ja: "ルートセッター／スタッフ", en: "Route setter / staff" },
-    org: { ja: "ボルダリングジム（アルバイト）", en: "Bouldering gym (part-time)" },
-    detail: { ja: "150本以上のコース設計に加え、出席管理の自動化など運用改善にも従事。", en: "Set 150+ climbing routes and also worked on operational improvements such as automating attendance lookups." },
+    title: { ja: "ボルダリングジムスタッフ", en: "Bouldering Gym Staff" },
+    org: { ja: "ルートセッター ／ アルバイト", en: "Route Setter / Part-time" },
+    detail: { ja: "150本以上のコース設計・キッズスクールの担当に加え、出席管理の自動化など運用改善にも従事。", en: "Set 150+ climbing routes, ran kids' classes, and worked on operational improvements such as automating attendance lookups." },
   },
   {
     period: { ja: "在学中", en: "Ongoing, alongside studies" },
-    title: { ja: "創設初期メンバー", en: "Founding-period member" },
-    org: { ja: "社会人ハンドボールチーム", en: "Adult (shakaijin) handball team" },
-    detail: { ja: "チームの立ち上げに初期メンバーの一人として参加。", en: "Joined as one of the early members during the team's founding." },
+    title: { ja: "社会人ハンドボールチーム創設", en: "Co-founded Adult Handball Team" },
+    org: { ja: "社会人チーム", en: "Adult community team" },
+    detail: { ja: "高校からの競技経験を活かし、仲間とゼロからチームを立ち上げた。", en: "Leveraged competitive experience from high school to help build the team from scratch with fellow players." },
+  },
+  {
+    period: { ja: "2026.04 — 現在", en: "Apr 2026 — present" },
+    title: { ja: "理工学研究科 電気電子情報通信工学専攻 修士課程", en: "M.S. student, Electrical, Electronic, and Communication Engineering" },
+    org: { ja: "中央大学大学院 國井研究室（2028年3月卒業予定）", en: "Chuo University Graduate School, Kunii Laboratory (expected graduation: March 2028)" },
   },
 ];
 
 export const contact = {
-  sheetLabel: { ja: "SHEET 07 — CONTACT", en: "SHEET 07 — CONTACT" } as Bi,
+  thanks: {
+    ja: "私のポートフォリオをご覧いただきありがとうございます。",
+    en: "Thank you for taking the time to visit my portfolio.",
+  } as Bi,
   heading: { ja: "Get in Touch", en: "Get in Touch" } as Bi,
   body: {
     ja: "研究内容・選考に関するご連絡など、お気軽にご連絡ください。",
@@ -317,7 +498,7 @@ export const contact = {
   // TODO: 実際の連絡先・リンクに差し替えてください（README参照）。
   email: "haru.tsurukai.info@gmail.com",
   github: "https://github.com/Tsurukai-haru",
-  linkedin: "",
+  linkedin: "" as string | undefined,
 };
 
 export const footer = {

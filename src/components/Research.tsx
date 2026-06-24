@@ -3,80 +3,130 @@
 import { research } from "@/data/content";
 import { useLanguage } from "@/lib/language-context";
 import { Reveal } from "./Reveal";
-import { SheetHeading } from "./SheetHeading";
 
 export function Research() {
   const { lang } = useLanguage();
 
   return (
-    <section id="research" className="border-t hairline py-24">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+    <section id="research" className="relative py-24">
+      <div
+        className="pointer-events-none absolute left-[5%] top-[8%] h-64 w-64 rounded-full blur-3xl"
+        style={{ backgroundColor: "#f5c8e0", opacity: 0.35 }}
+      />
+      <div
+        className="pointer-events-none absolute bottom-[10%] right-[8%] h-56 w-56 rounded-full blur-3xl"
+        style={{ backgroundColor: "#c4d8f8", opacity: 0.3 }}
+      />
+
+      <div className="relative mx-auto max-w-4xl px-8">
         <Reveal>
-          <SheetHeading sheetLabel={research.sheetLabel} heading={{ ja: "Research", en: "Research" }} />
+          <h2
+            className="font-round text-3xl font-bold tracking-tight sm:text-4xl"
+            style={{ color: "#2b1d3a" }}
+          >
+            Research
+          </h2>
+          <div className="mt-2 h-1 w-12 rounded-full" style={{ backgroundColor: "#a86ab8" }} />
         </Reveal>
 
-        <Reveal delay={60}>
-          <h3
-            className="font-display max-w-3xl text-xl font-semibold leading-snug sm:text-2xl"
-            style={{ color: "var(--color-linen)" }}
-          >
-            {research.heading[lang]}
-          </h3>
-          <p className="mt-5 max-w-3xl text-base leading-loose sm:text-lg" style={{ color: "var(--color-mist)" }}>
+        <Reveal delay={80}>
+          <p className="mt-8 text-base leading-relaxed sm:text-lg" style={{ color: "#7a6888" }}>
             {research.intro[lang]}
           </p>
         </Reveal>
 
-        {/* Stat callouts, like dimension call-outs on a drawing */}
-        <Reveal delay={120}>
-          <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden border sm:grid-cols-3" style={{ borderColor: "rgba(26, 35, 50, 0.12)", backgroundColor: "rgba(26, 35, 50, 0.12)" }}>
-            {research.stats.map((s) => (
-              <div key={s.label.en} className="p-6" style={{ backgroundColor: "var(--color-blueprint-900)" }}>
-                <p className="font-mono text-4xl font-semibold" style={{ color: "var(--color-copper-bright)" }}>
-                  {s.value}
-                  <span className="text-xl">{s.unit}</span>
-                </p>
-                <p className="mt-2 text-xs leading-relaxed" style={{ color: "var(--color-slate)" }}>
-                  {s.label[lang]}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal delay={160}>
-          <h4 className="mt-14 font-mono text-xs tracking-[0.2em]" style={{ color: "var(--color-copper-bright)" }}>
-            {research.approachHeading[lang]}
-          </h4>
-          <ol className="mt-5 space-y-5">
-            {research.approach.map((step, i) => (
-              <li key={i} className="flex gap-4">
+        <div className="mt-10 space-y-5">
+          {research.experiences.map((exp, i) => (
+            <Reveal key={exp.title.en} delay={120 + i * 80}>
+              <a
+                href={exp.achievementsLink ? "#achievements" : undefined}
+                className={`group block rounded-2xl border border-[#e8d8f0] p-6 transition-all duration-200 hover:-translate-y-1 hover:border-[#c0a8d4] hover:shadow-md${exp.achievementsLink ? " cursor-pointer" : ""}`}
+                style={{ backgroundColor: "rgba(255,255,255,0.6)", backdropFilter: "blur(8px)" }}
+              >
                 <span
-                  className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center border font-mono text-[11px]"
-                  style={{ borderColor: "var(--color-copper-dim)", color: "var(--color-copper-bright)" }}
+                  className="font-round inline-block rounded-full px-4 py-1 text-sm font-semibold"
+                  style={{ backgroundColor: "#f5eeff", color: "#a86ab8" }}
                 >
-                  {i + 1}
+                  {exp.title[lang]}
                 </span>
-                <p className="text-sm leading-loose sm:text-base" style={{ color: "var(--color-mist)" }}>
-                  {step[lang]}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </Reveal>
 
-        <Reveal delay={200}>
-          <div className="mt-14 border-t pt-8 hairline">
-            <h4 className="font-mono text-xs tracking-[0.2em]" style={{ color: "var(--color-copper-bright)" }}>
-              {research.closingHeading[lang]}
-            </h4>
-            <p className="mt-4 max-w-3xl text-sm leading-loose sm:text-base" style={{ color: "var(--color-mist)" }}>
-              {research.closing[lang]}
-            </p>
-            <p className="mt-6 max-w-3xl text-xs leading-relaxed" style={{ color: "var(--color-slate)" }}>
-              {research.context[lang]}
-            </p>
-          </div>
+                <p className="mt-4 text-sm leading-loose sm:text-base" style={{ color: "#7a6888" }}>
+                  {exp.body[lang]}
+                </p>
+
+                {exp.stats && exp.stats.length > 0 && (
+                  <>
+                    <p
+                      className="font-round mt-5 text-xs font-semibold tracking-widest"
+                      style={{ color: "#c0a8d4" }}
+                    >
+                      {lang === "ja" ? "実績" : "RESULTS"}
+                    </p>
+                    <div
+                      className={`mt-2 grid gap-3${exp.stats.length > 1 ? " sm:grid-cols-2" : ""}`}
+                    >
+                      {exp.stats.map((s) => (
+                        <div
+                          key={s.label.en}
+                          className="rounded-xl border border-[#e8d8f0] px-4 py-3 text-center"
+                          style={{ backgroundColor: "rgba(168,106,184,0.04)" }}
+                        >
+                          <p
+                            className="font-round text-2xl font-bold leading-none"
+                            style={{ color: "#a86ab8" }}
+                          >
+                            {s.value}
+                            <span className="text-lg">{s.unit}</span>
+                          </p>
+                          <p className="mt-1.5 text-xs leading-snug" style={{ color: "#7a6888" }}>
+                            {s.label[lang]}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                {exp.photos && exp.photos.length > 0 && (
+                  <div className={`mt-5 grid gap-3 ${exp.photos.length > 1 ? "sm:grid-cols-2" : ""}`}>
+                    {exp.photos.map((photo, pi) => (
+                      <div key={pi}>
+                        <img
+                          src={photo.src}
+                          alt={photo.caption?.[lang] ?? ""}
+                          className="w-full rounded-xl border border-[#e8d8f0] object-cover"
+                          style={{ aspectRatio: "16/9" }}
+                        />
+                        {photo.caption && (
+                          <p className="mt-1.5 text-center text-xs" style={{ color: "#c0a8d4" }}>
+                            {photo.caption[lang]}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {exp.achievementsLink && (
+                  <span
+                    className="font-round mt-4 inline-flex items-center gap-1.5 text-sm font-semibold"
+                    style={{ color: "#a86ab8" }}
+                  >
+                    {lang === "ja" ? "Achievements で詳細を見る" : "See details in Achievements"}
+                    <svg className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </span>
+                )}
+              </a>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={380}>
+          <p className="mt-8 text-xs leading-relaxed" style={{ color: "#c0a8d4" }}>
+            {research.context[lang]}
+          </p>
         </Reveal>
       </div>
     </section>

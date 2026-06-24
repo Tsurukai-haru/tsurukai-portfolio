@@ -10,7 +10,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -23,114 +23,111 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full border-b transition-colors ${
-        scrolled ? "backdrop-blur-md" : ""
-      }`}
+      className="fixed top-0 z-50 w-full transition-all duration-300"
       style={{
-        borderColor: "rgba(26, 35, 50, 0.12)",
-        backgroundColor: scrolled ? "rgba(244, 246, 248, 0.92)" : "transparent",
+        backgroundColor: scrolled ? "rgba(255,255,255,0.85)" : "transparent",
+        backdropFilter: scrolled ? "blur(12px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
+        borderBottom: scrolled ? "1px solid #e8d8f0" : "1px solid transparent",
       }}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
-        {/* Title-block: drawn-by / project, like the info box on a print */}
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-8 py-4">
+        {/* Logo */}
         <button
           onClick={() => handleNavClick("hero")}
-          className="group flex items-center gap-3 text-left"
-          aria-label="Scroll to top"
+          className="text-left"
+          aria-label="トップへ戻る"
         >
           <span
-            className="flex h-9 w-9 items-center justify-center border font-mono text-[11px]"
-            style={{ borderColor: "var(--color-copper)", color: "var(--color-copper-bright)" }}
+            className="font-round block text-lg leading-none"
+            style={{ fontWeight: 700, color: "#a86ab8" }}
           >
-            HT
+            Haru Tsurukai
           </span>
-          <span className="hidden flex-col leading-tight sm:flex">
-            <span className="font-display text-sm font-semibold" style={{ color: "var(--color-linen)" }}>
-              Tsurukai Haru
-            </span>
-            <span className="font-mono text-[10px] tracking-[0.18em]" style={{ color: "var(--color-slate)" }}>
-              DWG. NO. 2026-PORTFOLIO
-            </span>
+          <span
+            className="block text-[11px] tracking-widest"
+            style={{ color: "#c0a8d4" }}
+          >
+            PORTFOLIO 2026
           </span>
         </button>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-1 md:flex">
-          {nav.map((item, i) => (
+          {nav.map((item) => (
             <button
               key={item.id}
               onClick={() => handleNavClick(item.id)}
-              className="group flex items-center gap-2 px-3 py-2 font-mono text-[11px] tracking-[0.12em] transition-colors"
-              style={{ color: "var(--color-mist)" }}
+              className="font-round group relative px-3 py-2 text-sm transition-colors"
+              style={{ color: "#7a6888", fontWeight: 600 }}
             >
-              <span style={{ color: "var(--color-copper-dim)" }}>
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="transition-colors group-hover:text-[var(--color-copper-bright)]">
+              <span className="relative">
                 {item.label[lang]}
+                <span
+                  className="absolute -bottom-0.5 left-0 h-[2px] w-0 rounded-full transition-all duration-200 group-hover:w-full"
+                  style={{ backgroundColor: "#a86ab8" }}
+                />
               </span>
             </button>
           ))}
         </nav>
 
         <div className="flex items-center gap-3">
-          {/* Lang toggle, styled like a drafting unit switch (mm / in) */}
+          {/* Language toggle */}
           <button
             onClick={toggle}
-            className="flex items-center border font-mono text-[11px] tracking-[0.1em]"
-            style={{ borderColor: "rgba(26, 35, 50, 0.2)" }}
-            aria-label="Toggle language"
+            className="flex items-center rounded-full p-0.5 text-xs font-semibold transition-all"
+            style={{ backgroundColor: "#f0e8f8" }}
+            aria-label="言語を切り替える"
           >
             <span
-              className="px-2.5 py-1.5"
+              className="font-round rounded-full px-3 py-1 transition-all"
               style={{
-                backgroundColor: lang === "ja" ? "var(--color-copper)" : "transparent",
-                color: lang === "ja" ? "var(--color-blueprint-950)" : "var(--color-slate)",
+                backgroundColor: lang === "ja" ? "#a86ab8" : "transparent",
+                color: lang === "ja" ? "#fff" : "#c0a8d4",
               }}
             >
               JA
             </span>
             <span
-              className="px-2.5 py-1.5"
+              className="font-round rounded-full px-3 py-1 transition-all"
               style={{
-                backgroundColor: lang === "en" ? "var(--color-copper)" : "transparent",
-                color: lang === "en" ? "var(--color-blueprint-950)" : "var(--color-slate)",
+                backgroundColor: lang === "en" ? "#a86ab8" : "transparent",
+                color: lang === "en" ? "#fff" : "#c0a8d4",
               }}
             >
               EN
             </span>
           </button>
 
-          {/* Mobile menu toggle */}
+          {/* Mobile menu button */}
           <button
-            className="flex h-9 w-9 items-center justify-center border md:hidden"
-            style={{ borderColor: "rgba(26, 35, 50, 0.2)" }}
+            className="flex h-9 w-9 items-center justify-center rounded-full transition-colors md:hidden"
+            style={{ backgroundColor: open ? "#f0e8f8" : "transparent" }}
             onClick={() => setOpen((v) => !v)}
-            aria-label="Toggle menu"
+            aria-label="メニューを開く"
             aria-expanded={open}
           >
-            <span className="font-mono text-xs" style={{ color: "var(--color-linen)" }}>
+            <span style={{ color: "#a86ab8", fontSize: "1.2rem", lineHeight: 1 }}>
               {open ? "×" : "≡"}
             </span>
           </button>
         </div>
       </div>
 
+      {/* Mobile drawer */}
       {open && (
         <nav
-          className="flex flex-col border-t md:hidden"
-          style={{ borderColor: "rgba(26, 35, 50, 0.12)", backgroundColor: "rgba(244,246,248,0.98)" }}
+          className="flex flex-col py-2 md:hidden"
+          style={{ backgroundColor: "rgba(255,255,255,0.97)", borderTop: "1px solid #e8d8f0" }}
         >
-          {nav.map((item, i) => (
+          {nav.map((item) => (
             <button
               key={item.id}
               onClick={() => handleNavClick(item.id)}
-              className="flex items-center gap-3 px-6 py-3 text-left font-mono text-xs tracking-[0.12em]"
-              style={{ color: "var(--color-mist)" }}
+              className="font-round px-8 py-3 text-left text-sm transition-colors hover:bg-purple-50"
+              style={{ color: "#7a6888", fontWeight: 600 }}
             >
-              <span style={{ color: "var(--color-copper-dim)" }}>
-                {String(i + 1).padStart(2, "0")}
-              </span>
               {item.label[lang]}
             </button>
           ))}

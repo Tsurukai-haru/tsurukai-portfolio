@@ -2,7 +2,6 @@
 
 import { hero } from "@/data/content";
 import { useLanguage } from "@/lib/language-context";
-import { TrajectoryArt } from "./TrajectoryArt";
 
 export function Hero() {
   const { lang } = useLanguage();
@@ -13,61 +12,77 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="grid-sheet relative flex min-h-screen items-center overflow-hidden pt-28 pb-16"
+      className="relative flex min-h-screen items-center"
     >
-      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-10 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
-        <div>
+      {/* Soft pastel blob — pink right */}
+      <div
+        className="pointer-events-none absolute right-[8%] top-[12%] h-96 w-96 rounded-full blur-3xl"
+        style={{ backgroundColor: "#f5c8e0", opacity: 0.45 }}
+      />
+      {/* Soft pastel blob — blue-lavender left */}
+      <div
+        className="pointer-events-none absolute bottom-[18%] left-[4%] h-72 w-72 rounded-full blur-3xl"
+        style={{ backgroundColor: "#c4d8f8", opacity: 0.4 }}
+      />
+
+      <div className="relative mx-auto w-full max-w-5xl px-8 py-32">
+        {/* Name */}
+        <h1
+          className="font-display text-[clamp(2.8rem,7vw,5rem)] font-bold leading-none tracking-tight"
+          style={{ color: "#2b1d3a" }}
+        >
+          {hero.name[lang]}
+        </h1>
+        {lang === "ja" && (
           <p
-            className="font-mono text-xs tracking-[0.25em]"
-            style={{ color: "var(--color-copper-bright)" }}
+            className="font-round mt-2 text-2xl"
+            style={{ fontWeight: 700, color: "#a86ab8", letterSpacing: "0.06em" }}
           >
-            {hero.eyebrow[lang]}
+            {hero.name.en}
           </p>
+        )}
 
-          <h1
-            className="font-display mt-5 text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.4rem]"
-            style={{ color: "var(--color-linen)" }}
+        {/* Tagline */}
+        <p
+          className="font-display mt-8 text-3xl font-medium sm:text-4xl"
+          style={{ color: "#a86ab8" }}
+        >
+          {hero.tagline[lang]}
+        </p>
+
+        {/* Sub */}
+        <p
+          className="mt-5 max-w-xl text-lg leading-relaxed"
+          style={{ color: "#7a6888", wordBreak: "keep-all", overflowWrap: "anywhere" }}
+        >
+          {hero.sub[lang]}
+        </p>
+
+        {/* CTAs */}
+        <div className="mt-10 flex flex-wrap items-center gap-4">
+          <button
+            onClick={() => scrollTo("research")}
+            className="rounded-full px-7 py-3 font-mono text-sm tracking-wide text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+            style={{ backgroundColor: "#a86ab8" }}
           >
-            {hero.headline[lang]}
-          </h1>
-
-          <p
-            className="mt-6 max-w-xl text-base leading-relaxed sm:text-lg"
-            style={{ color: "var(--color-mist)" }}
+            {hero.ctaPrimary[lang]} →
+          </button>
+          <button
+            onClick={() => scrollTo("experience")}
+            className="rounded-full border px-7 py-3 font-mono text-sm tracking-wide transition-all hover:bg-white/50"
+            style={{ borderColor: "#d4b8e8", color: "#7a6888" }}
           >
-            {hero.sub[lang]}
-          </p>
-
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <button
-              onClick={() => scrollTo("research")}
-              className="px-6 py-3 font-mono text-xs tracking-[0.12em] transition-transform hover:-translate-y-0.5"
-              style={{ backgroundColor: "var(--color-copper)", color: "var(--color-blueprint-950)" }}
-            >
-              {hero.ctaPrimary[lang]} →
-            </button>
-            <button
-              onClick={() => scrollTo("experience")}
-              className="border px-6 py-3 font-mono text-xs tracking-[0.12em] transition-colors hover:border-[var(--color-copper-bright)]"
-              style={{ borderColor: "rgba(26, 35, 50, 0.2)", color: "var(--color-linen)" }}
-            >
-              {hero.ctaSecondary[lang]}
-            </button>
-          </div>
-
-          <div className="mt-12 border-t pt-5 hairline">
-            <p className="font-display text-base font-medium" style={{ color: "var(--color-linen)" }}>
-              {hero.name[lang]}
-            </p>
-            <p className="mt-1 max-w-md text-xs leading-relaxed" style={{ color: "var(--color-slate)" }}>
-              {hero.affiliation[lang]}
-            </p>
-          </div>
+            {hero.ctaSecondary[lang]}
+          </button>
         </div>
 
-        <div className="relative aspect-[4/3] w-full lg:aspect-square">
-          <TrajectoryArt />
-        </div>
+        {/* Affiliation */}
+        <p
+          className="font-round mt-16 text-base"
+          style={{ fontWeight: 600, color: "#c0a8d4", letterSpacing: "0.04em" }}
+        >
+          {hero.affiliation[lang]}
+        </p>
       </div>
     </section>
   );
