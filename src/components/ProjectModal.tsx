@@ -27,7 +27,7 @@ export function ProjectModal({
   if (!project) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-6">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
       <div
         className="absolute inset-0 backdrop-blur-sm"
         style={{ backgroundColor: "rgba(43, 29, 58, 0.25)" }}
@@ -36,7 +36,7 @@ export function ProjectModal({
       />
 
       <div
-        className="relative z-10 w-full sm:max-w-2xl max-h-[92vh] sm:max-h-[85vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl border border-[#e8d8f0] bg-white/90 backdrop-blur-md"
+        className="relative z-10 w-full sm:max-w-2xl max-h-[92vh] sm:max-h-[85vh] overflow-y-auto rounded-2xl border border-[#e8d8f0] bg-white/90 backdrop-blur-md"
         role="dialog"
         aria-modal
         aria-label={project.title[lang]}

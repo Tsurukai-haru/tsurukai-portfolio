@@ -16,12 +16,18 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
   const handleNavClick = (id: string) => {
     setOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
+    <>
     <header
       className="fixed top-0 z-50 w-full transition-all duration-300"
       style={{
@@ -115,24 +121,28 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
-      {open && (
-        <nav
-          className="flex flex-col py-2 md:hidden"
-          style={{ backgroundColor: "rgba(255,255,255,0.97)", borderTop: "1px solid #e8d8f0" }}
-        >
-          {nav.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleNavClick(item.id)}
-              className="font-round px-8 py-3 text-left text-sm transition-colors hover:bg-purple-50"
-              style={{ color: "#7a6888", fontWeight: 600 }}
-            >
-              {item.label[lang]}
-            </button>
-          ))}
-        </nav>
-      )}
     </header>
+
+      {/* Mobile fullscreen overlay menu */}
+      {open && (
+        <div
+          className="fixed inset-0 z-40 flex flex-col items-center justify-center md:hidden"
+          style={{ backgroundColor: "rgba(255,255,255,0.97)" }}
+        >
+          <nav className="flex flex-col items-center gap-1">
+            {nav.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
+                className="font-round px-10 py-4 text-xl transition-colors hover:text-[#a86ab8]"
+                style={{ color: "#7a6888", fontWeight: 600 }}
+              >
+                {item.label[lang]}
+              </button>
+            ))}
+          </nav>
+        </div>
+      )}
+    </>
   );
 }
